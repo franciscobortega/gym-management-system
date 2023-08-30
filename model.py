@@ -20,6 +20,9 @@ class User(db.Model):
     members = db.relationship("Member", back_populates="user")
     staff = db.relationship("Staff", back_populates="user")
 
+    def __repr__(self):
+        return f'<User user_id={self.user_id} username={self.username}>'
+
 class Member(db.Model):
     """A member."""
 
@@ -37,6 +40,9 @@ class Member(db.Model):
     
     user = db.relationship("User", back_populates="members")
     payments = db.relationship("Payment", back_populates="member")
+
+    def __repr__(self):
+        return f'<Member member_id={self.member_id} name={self.first_name} {self.last_name}>'
 
 class Staff(db.Model):
     """A staff person."""
@@ -56,6 +62,9 @@ class Staff(db.Model):
     
     user = db.relationship("User", back_populates="staff")
 
+    def __repr__(self):
+        return f'<Staff staff_id={self.staff_id} name={self.first_name} {self.last_name}>'
+
 class Equipment(db.Model):
     """A piece of equipment."""
     
@@ -68,6 +77,9 @@ class Equipment(db.Model):
     status = db.Column(db.Enum('in service', 'out of service'), nullable=False)
     last_maintenance = db.Column(db.Date)
 
+    def __repr__(self):
+        return f'<Equipment equipment_id={self.equipment_id} name={self.name}>'
+
 class Membership(db.Model):
     """A membership plan."""
     
@@ -79,6 +91,9 @@ class Membership(db.Model):
     price = db.Column(db.Float, nullable=False)
     duration = db.Column(db.Integer, nullable=False)
     features = db.Column(db.Text)
+
+    def __repr__(self):
+        return f'<Membership membership_id={self.membership_id} plan_name={self.plan_name}>'
 
 class Payment(db.Model):
     """A payment."""
@@ -93,6 +108,9 @@ class Payment(db.Model):
     status = db.Column(db.Enum('completed', 'pending', 'rejected'), nullable=False)
 
     member = db.relationship("Member", back_populates="payments")
+
+    def __repr__(self):
+        return f'<Payment payment_id={self.payment_id} amount={self.amount} status={self.status}>'
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///gym-management-system", echo=True):
