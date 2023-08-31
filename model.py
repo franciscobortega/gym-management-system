@@ -14,7 +14,7 @@ class User(db.Model):
     username = db.Column(db.String, unique=True, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
-    role = db.Column(db.Enum('admin', 'staff', 'member'), nullable=False)
+    role = db.Column(db.Enum('admin', 'staff', 'member', name='user_role'), nullable=False)
     phone = db.Column(db.String)
 
     members = db.relationship("Member", back_populates="user")
@@ -35,7 +35,7 @@ class Member(db.Model):
     address = db.Column(db.String)
     start_date = db.Column(db.Date, nullable=False)
     membership_plan = db.Column(db.Integer, db.ForeignKey('memberships.membership_id'))
-    status = db.Column(db.Enum('active', 'expired'), nullable=False)
+    status = db.Column(db.Enum('active', 'expired', name='user_role'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     
     user = db.relationship("User", back_populates="members")
@@ -74,7 +74,7 @@ class Equipment(db.Model):
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.Text)
     purchase_date = db.Column(db.Date)
-    status = db.Column(db.Enum('in service', 'out of service'), nullable=False)
+    status = db.Column(db.Enum('in service', 'out of service', name='equipment_status'), nullable=False)
     last_maintenance = db.Column(db.Date)
 
     def __repr__(self):
@@ -105,7 +105,7 @@ class Payment(db.Model):
     payment_date = db.Column(db.Date, nullable=False)
     amount = db.Column(db.Float, nullable=False)
     payment_method = db.Column(db.String)
-    status = db.Column(db.Enum('completed', 'pending', 'rejected'), nullable=False)
+    status = db.Column(db.Enum('completed', 'pending', 'rejected', name='payment_status'), nullable=False)
 
     member = db.relationship("Member", back_populates="payments")
 
