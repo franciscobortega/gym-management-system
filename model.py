@@ -113,7 +113,7 @@ class Payment(db.Model):
         return f'<Payment payment_id={self.payment_id} amount={self.amount} status={self.status}>'
 
 
-def connect_to_db(flask_app, db_uri="postgresql:///gym-management-system", echo=True):
+def connect_to_db(flask_app, db_uri="postgresql:///gym", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
