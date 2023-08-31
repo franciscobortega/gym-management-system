@@ -35,7 +35,7 @@ class Member(db.Model):
     address = db.Column(db.String)
     start_date = db.Column(db.Date, nullable=False)
     membership_plan = db.Column(db.Integer, db.ForeignKey('memberships.membership_id'))
-    status = db.Column(db.Enum('active', 'expired', name='user_role'), nullable=False)
+    status = db.Column(db.Enum('active', 'expired', name='member_status'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     
     user = db.relationship("User", back_populates="members")
